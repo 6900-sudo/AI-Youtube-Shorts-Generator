@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "id": "news-reel-example",
+  "format": {"width": 1080, "height": 1920, "fps": 24},
+  "audio": {"voice_lufs": -15.0, "true_peak_db": -1.5},
+  "voice": {"provider": "local-or-api", "voice_id": "news-host", "speed": 1.0},
+  "script": {
+    "hook": "Britain may have an energy problem hiding in plain sight.",
+    "body": "Replace this example with verified narration.",
+    "ending": "The important question is what happens next."
+  },
+  "scenes": [
+    {
+      "id": "scene_01",
+      "speech_key": "hook",
+      "unreal": {
+        "environment": "newsroom",
+        "camera": "slow_push",
+        "presenter": "news_host"
+      }
+    },
+    {
+      "id": "scene_02",
+      "speech_key": "body",
+      "unreal": {
+        "environment": "cinematic_broll",
+        "camera": "documentary_wide"
+      }
+    },
+    {
+      "id": "scene_03",
+      "speech_key": "ending",
+      "unreal": {
+        "environment": "newsroom",
+        "camera": "close",
+        "presenter": "news_host"
+      }
+    }
+  ],
+  "captions": {"enabled": true, "style": "modern_news"},
+  "output": {"container": "mp4", "video_codec": "h264", "audio_codec": "aac"}
+}
