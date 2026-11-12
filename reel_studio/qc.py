@@ -26,7 +26,7 @@ def _measure_true_peak(path: str) -> float:
     ]
     result = subprocess.run(cmd, capture_output=True, text=True, check=True)
     output = (result.stderr or "") + "\n" + (result.stdout or "")
-    matches = re.findall(r"True peak:\\s*(-?(?:\\d+(?:\\.\\d+)?|inf))\\s*dBFS", output, re.IGNORECASE)
+    matches = re.findall(r"True peak:\s*(-?(?:\d+(?:\.\d+)?|inf))\s*dBFS", output, re.IGNORECASE)
     if not matches:
         raise RuntimeError("FFmpeg did not report an audio true-peak measurement.")
     value = matches[-1].lower()
