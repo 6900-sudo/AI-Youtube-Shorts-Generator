@@ -19,4 +19,4 @@ jobs:
       - name: Compile Python
         run: python -m compileall reel_studio
       - name: Test manifest contract
-        run: pytest -q reel_studio/test_manifest.py
+        run: pytest -q reel_studio
