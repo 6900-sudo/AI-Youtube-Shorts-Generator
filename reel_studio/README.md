@@ -17,6 +17,16 @@ Speech timing is the master clock. Scene durations should be derived from narrat
 
 See `examples/news-reel.json`. A manifest is deliberately provider-neutral so TTS, Unreal and post-production implementations can be replaced without changing the story definition.
 
+See `examples/colin-reader.json` for a presenter segment with UGC-style B-roll overlays and an `environment_rules` block that swaps a background between day/night variants based on the presenter's outfit per scene.
+
+## Router
+
+`router.py` resolves the "scene jobs" step between speech timing and the Unreal/post-production calls:
+
+- `resolve_environment` — picks a background variant (e.g. `liverpool_skyline_day` vs `liverpool_skyline_night`) from a scene's `outfit` field and the manifest's optional top-level `environment_rules`. Scenes with no matching rule pass through unchanged.
+- `build_camera_plan` — generates a pan/zoom cut list spanning a scene's duration, one cut every 2-3s by default, for the angle-cut/pan/zoom cadence a UGC-style segment wants.
+- `route_scene` / `route_manifest` — combine the two per scene (and, via `production.route()`, per manifest) using the narration-derived durations from `build_timing_contract`. `route_manifest` passes through each scene's `role` (`presenter`/`broll`) and `overlays` so downstream rendering knows what to layer on, without the router itself calling any provider.
+
 ## Quality gates
 
 - 1080x1920 by default
