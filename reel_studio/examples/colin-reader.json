@@ -1,0 +1,60 @@
+{
+  "version": "1.0",
+  "id": "colin-reader-liverpool",
+  "format": {"width": 1080, "height": 1920, "fps": 24},
+  "audio": {"voice_lufs": -15.0, "true_peak_db": -1.5},
+  "voice": {"provider": "live-tts-lipsync", "voice_id": "colin-reader", "speed": 1.0},
+  "script": {
+    "hook": "Liverpool just made a decision nobody saw coming.",
+    "body": "Replace this example with verified narration.",
+    "ending": "Here's what to watch for next."
+  },
+  "environment_rules": {
+    "liverpool_skyline": {
+      "variants": {
+        "day": ["light_blazer", "shirt_no_jacket"],
+        "night": ["dark_jacket", "overcoat"]
+      },
+      "default": "day"
+    }
+  },
+  "scenes": [
+    {
+      "id": "scene_01",
+      "speech_key": "hook",
+      "role": "presenter",
+      "outfit": "light_blazer",
+      "unreal": {
+        "environment": "liverpool_skyline",
+        "camera": "slow_push",
+        "presenter": "colin_reader"
+      }
+    },
+    {
+      "id": "scene_02",
+      "speech_key": "body",
+      "role": "broll",
+      "unreal": {
+        "environment": "cinematic_broll",
+        "camera": "documentary_wide"
+      },
+      "overlays": [
+        {"type": "ugc_caption", "text": "LIVE: Liverpool", "style": "lower_third"},
+        {"type": "stat_card", "anchor": "top"}
+      ]
+    },
+    {
+      "id": "scene_03",
+      "speech_key": "ending",
+      "role": "presenter",
+      "outfit": "dark_jacket",
+      "unreal": {
+        "environment": "liverpool_skyline",
+        "camera": "close",
+        "presenter": "colin_reader"
+      }
+    }
+  ],
+  "captions": {"enabled": true, "style": "modern_news"},
+  "output": {"container": "mp4", "video_codec": "h264", "audio_codec": "aac"}
+}

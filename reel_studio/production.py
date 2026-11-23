@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from .manifest import build_timing_contract, load_manifest
+from .router import SceneRoute, route_manifest
 from .unreal import UnrealClaude
 
 
@@ -22,6 +23,20 @@ def prepare(manifest_path: str, speech_timing_path: str) -> dict[str, Any]:
     speech_timing = json.loads(Path(speech_timing_path).read_text(encoding="utf-8"))
     contract = build_timing_contract(manifest, speech_timing)
     return {"manifest": manifest, "timing": contract}
+
+
+def route(
+    prepared: dict[str, Any],
+    cut_interval: tuple[float, float] = (2.0, 3.0),
+    seed: int | None = None,
+) -> list[SceneRoute]:
+    """Resolve the scene jobs step: background variants and camera cuts per scene.
+
+    Takes the output of `prepare()` so the pipeline stays manifest -> speech
+    timing -> scene jobs -> Unreal/post-production, with narration timing as
+    the only source of scene duration.
+    """
+    return route_manifest(prepared["manifest"], prepared["timing"], cut_interval=cut_interval, seed=seed)
 
 
 def check_unreal(base_url: str = "http://localhost:3000") -> dict[str, Any]:
